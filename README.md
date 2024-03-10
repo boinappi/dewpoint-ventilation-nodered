@@ -35,6 +35,8 @@ https://www.berrybase.de/lp-785060-lithium-polymer/lipo-akku-3-7v-2500mah-mit-2-
 8€
 
 ### Temperature/Humidity Sensor
+There are many and it's hard to see through if they are good or not. Here is a qute scientific comparison between different sensors: https://forum.arduino.cc/t/compare-different-i2c-temperature-and-humidity-sensors-sht2x-sht3x-sht85/599609
+
 #### DHT22
 https://www.berrybase.de/dht22-digitaler-temperatur-und-luftfeuchtesensor
 
@@ -48,6 +50,11 @@ https://www.berrybase.de/gy-bme280-breakout-board-3in1-sensor-fuer-temperatur-lu
 6€
 
 Definitely better than DHT22, but users report self-heating. Temperature readings are 1°-2° C higher than they really are.
+
+#### SHT30-D
+https://www.adafruit.com/product/4099
+
+Capsuled with wire and metal housing
 
 #### SHT85
 https://de.farnell.com/sensirion/sht85/feuchtigk-temperatursensor-digital/dp/3106917
