@@ -63,6 +63,8 @@ tbd
 
 One exhaust fan, one inlet fan. Water/Rain/Rhodent protection needed.
 
+This one hs it all: https://www.iventilatoren.de/fensterlufter-mit-reversmotor-und-automatischen-jalousien-o-237-mm-x11920
+
 ### Fan control
 Shelly Plus 1PM
 
