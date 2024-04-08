@@ -14,6 +14,10 @@ SHT85 sht(SHT85_ADDRESS);
 float temp = 0;
 float hum = 0;
 
+long lastMillisSend = 0;
+
+void setup_wifi();
+
 void setup()
 {
   Serial.begin(115200);
@@ -80,6 +84,14 @@ void readSensor()
   hum = sht.getHumidity();
 }
 
+void sendData()
+{
+  char tempStr[5];
+  char humStr[5];
+  client.publish("indoor_sensor/temperature", "teststr");
+  //client.publish("indoor_sensor/humidity", humStr);
+}
+
 void loop()
 {
   if(WiFi.status() != WL_CONNECTED){
@@ -92,7 +104,15 @@ void loop()
   }
   client.loop();
 
-  delay(100);
+  readSensor();
+  Serial.print("T: ");
+  Serial.print(temp);
+  Serial.print("H: ");
+  Serial.println(hum);
+
+  sendData();
+  delay(10000);
+   
 }
 
 
