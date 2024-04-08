@@ -88,8 +88,8 @@ void readSensor()
 
 void sendData()
 {  
-  snprintf(msg, MSG_BUFFER, "{\"T\":%f,\"H\":%f}", temp, hum);
-  client.publish("indoor_sensor/temperature", msg);
+  snprintf(msg, MSG_BUFFER, "{\"t\":%.1f,\"h\":%.1f}", temp, hum);
+  client.publish("sensor_indoor", msg);
   //client.publish("indoor_sensor/humidity", humStr);
 }
 
