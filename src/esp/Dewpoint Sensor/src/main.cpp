@@ -1,64 +1,97 @@
 #include <Arduino.h>
-
-//
-//    FILE: SHT85_demo.ino
-//  AUTHOR: Rob Tillaart
-// PURPOSE: demo
-//     URL: https://github.com/RobTillaart/SHT85
-//
-// TOPVIEW SHT85  (check datasheet)
-//            +-------+
-// +-----\    | SDA 4 -----
-// | +-+  ----+ GND 3 -----
-// | +-+  ----+ +5V 2 -----
-// +-----/    | SCL 1 -----
-//            +-------+
-
-
+#include <ESP8266WiFi.h>
+#include "PubSubClient.h"
 #include "SHT85.h"
+#include "../include/conf.h"
+
+WiFiClient espClient;
+PubSubClient client(espClient);
+
 
 #define SHT85_ADDRESS         0x44
-
-uint32_t start;
-uint32_t stop;
-
 SHT85 sht(SHT85_ADDRESS);
 
+float temp = 0;
+float hum = 0;
 
 void setup()
 {
   Serial.begin(115200);
   Serial.println(__FILE__);
-  Serial.print("SHT_LIB_VERSION: \t");
-  Serial.println(SHT_LIB_VERSION);
 
-  Wire.begin();
-  Wire.setClock(100000);
-  sht.begin();
-
-  uint16_t stat = sht.readStatus();
-  Serial.print(stat, HEX);
-  Serial.println();
-
-  uint32_t ser = sht.GetSerialNumber();
-  Serial.print(ser, HEX);
-  Serial.println();
+  int shtCheck = -1;
+  while(shtCheck != 0)
+  {
+    Wire.begin();
+    Wire.setClock(100000);
+    sht.begin();
+    shtCheck = sht.getError();
+    Serial.println(shtCheck);
+  }
   delay(1000);
+  setup_wifi();
+
+  client.setServer(mqtt_server, mqtt_port);
 }
 
+void setup_wifi() {
+  delay(10);
+  // We start by connecting to a WiFi network
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+}
+
+void reconnect() {
+  // Loop until we're reconnected
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Attempt to connect
+    if (client.connect("ESP8266Client")) {
+      Serial.println("connected");
+      // Subscribe
+      client.subscribe("esp32/output");
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(client.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+void readSensor()
+{
+  sht.read();   
+  temp = sht.getTemperature();  
+  hum = sht.getHumidity();
+}
 
 void loop()
 {
-  start = micros();
-  sht.read();         //  default = true/fast       slow = false
-  stop = micros();
+  if(WiFi.status() != WL_CONNECTED){
+    setup_wifi();
+  }
 
-  Serial.print("\t");
-  Serial.print((stop - start) * 0.001);
-  Serial.print("\t");
-  Serial.print(sht.getTemperature(), 1);
-  Serial.print("\t");
-  Serial.println(sht.getHumidity(), 1);
+  if(!client.connected())
+  {
+    reconnect();
+  }
+  client.loop();
+
   delay(100);
 }
 
