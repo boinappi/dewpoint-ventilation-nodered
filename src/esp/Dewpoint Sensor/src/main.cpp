@@ -7,6 +7,8 @@
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+#define MSG_BUFFER 50
+char msg[MSG_BUFFER];
 
 #define SHT85_ADDRESS         0x44
 SHT85 sht(SHT85_ADDRESS);
@@ -85,10 +87,9 @@ void readSensor()
 }
 
 void sendData()
-{
-  char tempStr[5];
-  char humStr[5];
-  client.publish("indoor_sensor/temperature", "teststr");
+{  
+  snprintf(msg, MSG_BUFFER, "{\"T\":%f,\"H\":%f}", temp, hum);
+  client.publish("indoor_sensor/temperature", msg);
   //client.publish("indoor_sensor/humidity", humStr);
 }
 
