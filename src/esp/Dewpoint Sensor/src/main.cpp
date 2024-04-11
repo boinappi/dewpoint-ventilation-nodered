@@ -112,7 +112,7 @@ void loop()
   Serial.println(hum);
 
   sendData();
-  delay(10000);
+  ESP.deepSleep(5*(60e6));
    
 }
 
