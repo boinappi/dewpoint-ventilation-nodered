@@ -1,0 +1,877 @@
+[
+    {
+        "id": "44b19fd327dc4245",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "fc6c6bb4bcf28efe",
+        "type": "subflow",
+        "name": "Smooth h & t",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 540,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "d3a20115d1dce694"
+                    },
+                    {
+                        "id": "6a903eec7e9cb3bc"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1540,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "d1994207b9c024c7",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "a2c6fe6fccf222a3",
+        "type": "ui_group",
+        "name": "Taupunkttemperaturen",
+        "tab": "b773b3ea60e4cd2f",
+        "order": 2,
+        "disp": true,
+        "width": 6,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "37db2356dc179c51",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-dark",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#097479",
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#0eb8c0",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#097479",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD.MM.YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "b773b3ea60e4cd2f",
+        "type": "ui_tab",
+        "name": "Taupunkt",
+        "icon": "fa-tint",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "88a7db86f6a72312",
+        "type": "mqtt-broker",
+        "name": "Mosquitto",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "66358f4ffd7b9e77",
+        "type": "ui_tab",
+        "name": "Sensordaten",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "ac09835a791728a6",
+        "type": "ui_group",
+        "name": "Wochenansicht",
+        "tab": "66358f4ffd7b9e77",
+        "order": 1,
+        "disp": true,
+        "width": 24,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c02e68b9afb10f8d",
+        "type": "ui_group",
+        "name": "Sensor innen",
+        "tab": "b773b3ea60e4cd2f",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e0843e943d3b2d92",
+        "type": "ui_group",
+        "name": "Sensor aussen",
+        "tab": "b773b3ea60e4cd2f",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d3a20115d1dce694",
+        "type": "smooth",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "Smooth h",
+        "property": "payload.h",
+        "action": "mean",
+        "count": "5",
+        "round": "",
+        "mult": "single",
+        "reduce": false,
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "3549bd187480f575"
+            ]
+        ]
+    },
+    {
+        "id": "6a903eec7e9cb3bc",
+        "type": "smooth",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "Smooth t",
+        "property": "payload.t",
+        "action": "mean",
+        "count": "5",
+        "round": "",
+        "mult": "single",
+        "reduce": false,
+        "x": 740,
+        "y": 380,
+        "wires": [
+            [
+                "2649535728db1e8b"
+            ]
+        ]
+    },
+    {
+        "id": "7d2e007136bcade4",
+        "type": "join",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1190,
+        "y": 340,
+        "wires": [
+            [
+                "d1994207b9c024c7"
+            ]
+        ]
+    },
+    {
+        "id": "3549bd187480f575",
+        "type": "change",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.t",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 940,
+        "y": 300,
+        "wires": [
+            [
+                "7d2e007136bcade4"
+            ]
+        ]
+    },
+    {
+        "id": "2649535728db1e8b",
+        "type": "change",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.h",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 380,
+        "wires": [
+            [
+                "7d2e007136bcade4"
+            ]
+        ]
+    },
+    {
+        "id": "d1994207b9c024c7",
+        "type": "function",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "fixed decimals",
+        "func": "msg.payload.h = Math.round(msg.payload.h*10)/10\nmsg.payload.t = Math.round(msg.payload.t*10)/10\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 340,
+        "wires": [
+            [
+                "8926a56d752dbfc0"
+            ]
+        ]
+    },
+    {
+        "id": "8926a56d752dbfc0",
+        "type": "debug",
+        "z": "fc6c6bb4bcf28efe",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1680,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "7e722569d7e3a4d3",
+        "type": "function",
+        "z": "44b19fd327dc4245",
+        "name": "to dewpoint",
+        "func": "/*\nr = relative Luftfeuchte\nT = Temperatur in °C\nTK = Temperatur in Kelvin (TK = T + 273.15)\nTD = Taupunkttemperatur in °C\nDD = Dampfdruck in hPa\nSDD = Sättigungsdampfdruck in hPa\n*/\n\nvar R = 8314.3\nvar MW = 18.016\n\nvar a, b;\n\n\nfunction SDD(T){\n    if(T>=0){\n        a = 7.5;\n        b = 237.3; \n    } else {\n        a = 7.6;\n        b = 240.7; \n    }\n\n    return 6.1078 * Math.pow(10,(a*T)/(b+T))\n}\n\nfunction DD(r, T){\n    return r/100 * SDD(T)\n}\n\nfunction TD(r, T){\n    var v = Math.log10(DD(r, T)/6.1078)\n    return b*v/(a-v)\n}\n\nmsg.payload.dewpoint = TD(msg.payload.h, msg.payload.t).toFixed(1);\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 380,
+        "wires": [
+            [
+                "2cc646640529e9d4"
+            ]
+        ]
+    },
+    {
+        "id": "f5f837ebf45b068f",
+        "type": "inject",
+        "z": "44b19fd327dc4245",
+        "name": "Debug input aussen",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "sensor_outdoor",
+        "payload": "{\"t\":12,\"h\":70}",
+        "payloadType": "json",
+        "x": 670,
+        "y": 460,
+        "wires": [
+            [
+                "7e722569d7e3a4d3"
+            ]
+        ]
+    },
+    {
+        "id": "b2ae1669dcaae272",
+        "type": "ui_gauge",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "a2c6fe6fccf222a3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Taupunkt aussen",
+        "label": "Grad C",
+        "format": "{{msg.payload.dewpoint}}",
+        "min": "-40",
+        "max": "40",
+        "colors": [
+            "#3ac0f3",
+            "#59e664",
+            "#f93c3c"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1330,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2cc646640529e9d4",
+        "type": "switch",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "sensor_outdoor",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensor_indoor",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1130,
+        "y": 380,
+        "wires": [
+            [
+                "9ca2a7554eea296c",
+                "b2ae1669dcaae272"
+            ],
+            [
+                "ead063fbaf3e1cf2",
+                "b6402552560c8767"
+            ]
+        ]
+    },
+    {
+        "id": "b6402552560c8767",
+        "type": "ui_gauge",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "a2c6fe6fccf222a3",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Taupunkt innen",
+        "label": "Grad C",
+        "format": "{{msg.payload.dewpoint}}",
+        "min": "-40",
+        "max": "40",
+        "colors": [
+            "#3ac0f3",
+            "#59e664",
+            "#f93c3c"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 1320,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "ead063fbaf3e1cf2",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "copy to flow",
+        "rules": [
+            {
+                "t": "set",
+                "p": "indoor.dewpoint",
+                "pt": "flow",
+                "to": "payload.dewpoint",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "indoor.temperature",
+                "pt": "flow",
+                "to": "payload.t",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "indoor.humidity",
+                "pt": "flow",
+                "to": "payload.h",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9ca2a7554eea296c",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "copy to flow",
+        "rules": [
+            {
+                "t": "set",
+                "p": "outdoor.dewpoint",
+                "pt": "flow",
+                "to": "payload.dewpoint",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "outdoor.temperature",
+                "pt": "flow",
+                "to": "payload.t",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "outdoor.humidity",
+                "pt": "flow",
+                "to": "payload.h",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1310,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d32dfc606771a77",
+        "type": "complete",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "scope": [
+            "9ca2a7554eea296c",
+            "ead063fbaf3e1cf2"
+        ],
+        "uncaught": false,
+        "x": 450,
+        "y": 580,
+        "wires": [
+            [
+                "05b84ac1094ea539",
+                "af7645de1f8a75c8"
+            ]
+        ]
+    },
+    {
+        "id": "05b84ac1094ea539",
+        "type": "function",
+        "z": "44b19fd327dc4245",
+        "name": "new sensor value",
+        "func": "var outdoor = flow.get(\"outdoor.dewpoint\");\nvar indoor = flow.get(\"indoor.dewpoint\");\n\nvar diff = (indoor - outdoor);\nvar need_ventilation = false;\nif(diff <= 4.0){\n    need_ventilation = true;\n}\n\nmsg.payload = {\"dewpoint_diff\": diff.toFixed(1), \"need_ventilation\": need_ventilation};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 580,
+        "wires": [
+            [
+                "d42bd60866bac4eb"
+            ]
+        ]
+    },
+    {
+        "id": "d42bd60866bac4eb",
+        "type": "ui_gauge",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "a2c6fe6fccf222a3",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Taupunktdifferenz",
+        "label": "Grad C",
+        "format": "{{msg.payload.dewpoint_diff}}",
+        "min": "-6",
+        "max": 10,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 930,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "0820aa177e9d53d7",
+        "type": "ui_chart",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "ac09835a791728a6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "rel. Luftfeuchte",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "bezier",
+        "nodata": "Warte auf Sensordaten",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 920,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "af7645de1f8a75c8",
+        "type": "function",
+        "z": "44b19fd327dc4245",
+        "name": "Daten innen",
+        "func": "var temperature = {\n    \"payload\": flow.get(\"indoor.temperature\"),\n    \"topic\": \"Temperatur\"\n}\n\nvar humidity = {\n    \"payload\": flow.get(\"indoor.humidity\"),\n    \"topic\": \"Luftfeuchtigkeit\"\n}\n\nreturn [temperature, humidity];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 640,
+        "wires": [
+            [
+                "580bc5051f682d6a",
+                "5b3e58a77a104ce7"
+            ],
+            [
+                "0820aa177e9d53d7",
+                "1bb92b960e33e520"
+            ]
+        ]
+    },
+    {
+        "id": "a87676a5e9f77419",
+        "type": "mqtt in",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "topic": "sensor_indoor",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "88a7db86f6a72312",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 460,
+        "y": 340,
+        "wires": [
+            [
+                "1de9cee6c23b6030"
+            ]
+        ]
+    },
+    {
+        "id": "1de9cee6c23b6030",
+        "type": "subflow:fc6c6bb4bcf28efe",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "7e722569d7e3a4d3"
+            ]
+        ]
+    },
+    {
+        "id": "580bc5051f682d6a",
+        "type": "ui_chart",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "ac09835a791728a6",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Temperatur",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "bezier",
+        "nodata": "Warte auf Sensordaten",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 910,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5b3e58a77a104ce7",
+        "type": "ui_gauge",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "c02e68b9afb10f8d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperatur",
+        "label": "Grad C",
+        "format": "{{value}}",
+        "min": "-30",
+        "max": "50",
+        "colors": [
+            "#1ae4fb",
+            "#16d511",
+            "#fa0e07"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 910,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "1bb92b960e33e520",
+        "type": "ui_gauge",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "c02e68b9afb10f8d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "rel. Luftfeuchte",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#9b7979",
+            "#16d511",
+            "#1b43e7"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 920,
+        "y": 800,
+        "wires": []
+    }
+]
