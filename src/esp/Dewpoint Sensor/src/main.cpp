@@ -89,7 +89,7 @@ void readSensor()
 void sendData()
 {  
   snprintf(msg, MSG_BUFFER, "{\"t\":%.1f,\"h\":%.1f}", temp, hum);
-  client.publish("sensor_indoor", msg);
+  client.publish(sensoridentifier, msg);
   //client.publish("indoor_sensor/humidity", humStr);
 }
 
@@ -112,7 +112,7 @@ void loop()
   Serial.println(hum);
 
   sendData();
-  delay(500);
+  delay(5000);
   ESP.deepSleep(5*(60e6));
   
 }
