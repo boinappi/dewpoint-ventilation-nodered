@@ -848,7 +848,7 @@
         "type": "function",
         "z": "44b19fd327dc4245",
         "name": "new sensor value",
-        "func": "var outdoor = flow.get(\"outdoor.dewpoint\");\nvar indoor = flow.get(\"indoor.dewpoint\");\nvar threshold = flow.get(\"dewpointVentThreshold\");\n\nvar diff = (outdoor - indoor);\nvar need_ventilation = false;\nif(diff <= threshold){\n    need_ventilation = true;\n}\n\nmsg.payload = {\"dewpoint_diff\": diff.toFixed(1), \"need_ventilation\": need_ventilation};\nreturn msg;",
+        "func": "var outdoor = flow.get(\"outdoor.dewpoint\");\nvar indoor = flow.get(\"indoor.dewpoint\");\n//var threshold = flow.get(\"dewpointVentThreshold\");\n\nvar diff = (outdoor - indoor);\n//var need_ventilation = false;\n//if(diff <= threshold){\n//    need_ventilation = true;\n//}\n\nmsg.payload = {\"dewpoint_diff\": diff.toFixed(1)};\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -1481,9 +1481,9 @@
         "type": "comment",
         "z": "44b19fd327dc4245",
         "name": "Control Logic",
-        "info": "Whenever a new sensor value is received, the dewpoint could reach the need for venting. So we check this everytime we receive a new sensor value.",
-        "x": 230,
-        "y": 1000,
+        "info": "Whenever a new sensor value is received, the dewpoint could reach the need for venting. So we check this everytime we receive a new sensor value.\nWhen the dewpoint difference is below a certain threshold, we start the fans. After that, if we reach a certain threshold above the first one, we stop the fans.",
+        "x": 490,
+        "y": 900,
         "wires": []
     },
     {
@@ -1492,7 +1492,7 @@
         "z": "44b19fd327dc4245",
         "name": "",
         "label": "",
-        "tooltip": "Dies gibt die Taupunktdifferenz an bei der die Lüftung gestartet wird. Die Differenz sollte immer negativ sein, ansonsten wird Feuchtigkeit von draussen nach drinnen transportiert",
+        "tooltip": "Dies gibt die Taupunktdifferenz an bei der die Lüftung gestartet wird. Die Differenz sollte immer negativ und kleiner als der Stopwert sein, ansonsten wird Feuchtigkeit von draussen nach drinnen transportiert",
         "group": "c22e38380ae51f44",
         "order": 2,
         "width": 0,
@@ -1502,7 +1502,7 @@
         "topic": "threshold",
         "topicType": "str",
         "min": "-10",
-        "max": "10",
+        "max": "-2",
         "step": "0.5",
         "className": "",
         "x": 310,
@@ -1518,21 +1518,31 @@
         "type": "switch",
         "z": "44b19fd327dc4245",
         "name": "",
-        "property": "payload.need_ventilation",
+        "property": "payload.dewpoint_diff",
         "propertyType": "msg",
         "rules": [
             {
-                "t": "true"
+                "t": "lte",
+                "v": "dewpointStartVentThreshold",
+                "vt": "flow"
+            },
+            {
+                "t": "gte",
+                "v": "dewpointStopVentThreshold",
+                "vt": "flow"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
-        "x": 130,
-        "y": 1060,
+        "outputs": 2,
+        "x": 210,
+        "y": 1020,
         "wires": [
             [
-                "483823da68dd7aaa"
+                "48d834da41e61473"
+            ],
+            [
+                "aefe160329a5b834"
             ]
         ]
     },
@@ -1567,8 +1577,8 @@
         "topic": "shellyplus1pm-abluft/command/switch:0",
         "payload": "on",
         "payloadType": "str",
-        "x": 170,
-        "y": 2140,
+        "x": 150,
+        "y": 2440,
         "wires": [
             [
                 "fb87e2390dc1cf46",
@@ -1597,8 +1607,8 @@
         "topic": "shellyplus1pm-abluft/command/switch:0",
         "payload": "off",
         "payloadType": "str",
-        "x": 170,
-        "y": 2240,
+        "x": 150,
+        "y": 2540,
         "wires": [
             [
                 "1a02945147fb8e69",
@@ -1611,15 +1621,15 @@
         "type": "debug",
         "z": "44b19fd327dc4245",
         "name": "debug 4",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 600,
-        "y": 2240,
+        "x": 580,
+        "y": 2540,
         "wires": []
     },
     {
@@ -1636,8 +1646,8 @@
         "correl": "",
         "expiry": "",
         "broker": "88a7db86f6a72312",
-        "x": 610,
-        "y": 2140,
+        "x": 590,
+        "y": 2440,
         "wires": []
     },
     {
@@ -1653,8 +1663,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 150,
-        "y": 2040,
+        "x": 130,
+        "y": 2340,
         "wires": [
             [
                 "bc3a62154d23526e"
@@ -1666,15 +1676,15 @@
         "type": "debug",
         "z": "44b19fd327dc4245",
         "name": "debug 5",
-        "active": true,
+        "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 360,
-        "y": 2040,
+        "x": 340,
+        "y": 2340,
         "wires": []
     },
     {
@@ -1688,56 +1698,6 @@
             [
                 "deaf591fbdc0259b",
                 "68deab2ff510b847"
-            ]
-        ]
-    },
-    {
-        "id": "933f35b77cb70dcf",
-        "type": "trigger",
-        "z": "44b19fd327dc4245",
-        "name": "",
-        "op1": "true",
-        "op2": "false",
-        "op1type": "bool",
-        "op2type": "bool",
-        "duration": "30",
-        "extend": false,
-        "overrideDelay": false,
-        "units": "min",
-        "reset": "",
-        "bytopic": "all",
-        "topic": "topic",
-        "outputs": 1,
-        "x": 580,
-        "y": 1060,
-        "wires": [
-            [
-                "18e4a278d5a40c53"
-            ]
-        ]
-    },
-    {
-        "id": "483823da68dd7aaa",
-        "type": "delay",
-        "z": "44b19fd327dc4245",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "45",
-        "rateUnits": "minute",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": true,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 330,
-        "y": 1060,
-        "wires": [
-            [
-                "933f35b77cb70dcf"
             ]
         ]
     },
@@ -1892,8 +1852,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 830,
-        "y": 1060,
+        "x": 750,
+        "y": 1020,
         "wires": [
             [
                 "958d1addddbff024"
@@ -1986,7 +1946,7 @@
         "rules": [
             {
                 "t": "set",
-                "p": "dewpointVentThreshold",
+                "p": "dewpointStartVentThreshold",
                 "pt": "flow",
                 "to": "payload",
                 "tot": "msg"
@@ -1997,7 +1957,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 540,
+        "x": 610,
         "y": 1880,
         "wires": [
             []
@@ -2055,7 +2015,6 @@
         "y": 1700,
         "wires": [
             [
-                "933f35b77cb70dcf",
                 "f8f7669349e375d5",
                 "39b09356bf44faab"
             ]
@@ -2322,8 +2281,7 @@
         "y": 1280,
         "wires": [
             [
-                "f8f7669349e375d5",
-                "933f35b77cb70dcf"
+                "f8f7669349e375d5"
             ]
         ]
     },
@@ -2350,8 +2308,7 @@
         "y": 1180,
         "wires": [
             [
-                "39b09356bf44faab",
-                "933f35b77cb70dcf"
+                "39b09356bf44faab"
             ]
         ]
     },
@@ -2364,7 +2321,7 @@
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "Automatikschwellenwert für Taupunkt",
+        "label": "Taupunktdifferenzschwelle zum Starten der Lüftung",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
@@ -2372,7 +2329,7 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 210,
+        "x": 250,
         "y": 1820,
         "wires": []
     },
@@ -2452,7 +2409,8 @@
                 "2f7c1218c4029326",
                 "2ec0aeaf37f87b6d",
                 "bf406e30df30749f",
-                "2691957e537dfe2d"
+                "2691957e537dfe2d",
+                "163357482ec17dba"
             ]
         ]
     },
@@ -2465,7 +2423,7 @@
         "width": 0,
         "height": 0,
         "name": "",
-        "label": "dewpointVentThreshold",
+        "label": "dewpointStartVentThreshold",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
@@ -2473,7 +2431,7 @@
         "font": "",
         "fontSize": 16,
         "color": "#000000",
-        "x": 2130,
+        "x": 2140,
         "y": 1520,
         "wires": []
     },
@@ -2487,7 +2445,7 @@
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "dewpointVentThreshold",
+                "to": "dewpointStartVentThreshold",
                 "tot": "flow"
             }
         ],
@@ -2524,7 +2482,7 @@
         "to": "",
         "reg": false,
         "x": 1910,
-        "y": 1580,
+        "y": 1640,
         "wires": [
             [
                 "68a3af59ee7c259e"
@@ -2549,7 +2507,7 @@
         "fontSize": 16,
         "color": "#000000",
         "x": 2140,
-        "y": 1580,
+        "y": 1640,
         "wires": []
     },
     {
@@ -2572,7 +2530,7 @@
         "to": "",
         "reg": false,
         "x": 1910,
-        "y": 1640,
+        "y": 1700,
         "wires": [
             [
                 "1d9bf3253b64a0d0"
@@ -2597,7 +2555,7 @@
         "fontSize": 16,
         "color": "#000000",
         "x": 2110,
-        "y": 1640,
+        "y": 1700,
         "wires": []
     },
     {
@@ -2671,8 +2629,8 @@
         "topic": "",
         "payload": "true",
         "payloadType": "bool",
-        "x": 190,
-        "y": 2340,
+        "x": 170,
+        "y": 2640,
         "wires": [
             [
                 "e6a00ddc23c853ae"
@@ -2700,8 +2658,8 @@
         "topic": "",
         "payload": "false",
         "payloadType": "bool",
-        "x": 190,
-        "y": 2380,
+        "x": 170,
+        "y": 2680,
         "wires": [
             [
                 "e6a00ddc23c853ae"
@@ -2713,8 +2671,8 @@
         "type": "subflow:4efe4ef31efc59e1",
         "z": "44b19fd327dc4245",
         "name": "",
-        "x": 370,
-        "y": 2360,
+        "x": 350,
+        "y": 2660,
         "wires": [
             []
         ]
@@ -3041,6 +2999,210 @@
         "wires": [
             [
                 "7992a7dc6b6867f2"
+            ]
+        ]
+    },
+    {
+        "id": "1ecd28eb7f72a3dd",
+        "type": "ui_slider",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "label": "",
+        "tooltip": "Dies gibt die Taupunktdifferenz an bei der die Lüftung gestoppt wird. Der Wert muss immer größer als die Starttemperatur sein",
+        "group": "c22e38380ae51f44",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "threshold",
+        "topicType": "str",
+        "min": "-10",
+        "max": "0",
+        "step": "0.5",
+        "className": "",
+        "x": 310,
+        "y": 2020,
+        "wires": [
+            [
+                "93cbdf7e9a19c953"
+            ]
+        ]
+    },
+    {
+        "id": "93cbdf7e9a19c953",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "dewpointStopVentThreshold",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 2020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d98bac13b58016bf",
+        "type": "inject",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "-1",
+        "payloadType": "num",
+        "x": 130,
+        "y": 2020,
+        "wires": [
+            [
+                "1ecd28eb7f72a3dd"
+            ]
+        ]
+    },
+    {
+        "id": "48d834da41e61473",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "lüften",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "true",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 1000,
+        "wires": [
+            [
+                "18e4a278d5a40c53"
+            ]
+        ]
+    },
+    {
+        "id": "aefe160329a5b834",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "lüften anhalten",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "false",
+                "tot": "bool"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 1040,
+        "wires": [
+            [
+                "18e4a278d5a40c53"
+            ]
+        ]
+    },
+    {
+        "id": "68909f630c746448",
+        "type": "ui_text",
+        "z": "44b19fd327dc4245",
+        "group": "c22e38380ae51f44",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Taupunktdifferenzschwelle zum Stoppen der Lüftung",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 260,
+        "y": 1960,
+        "wires": []
+    },
+    {
+        "id": "7ce6ca6f49ec5569",
+        "type": "ui_text",
+        "z": "44b19fd327dc4245",
+        "group": "66d47b177d5cd38f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "dewpointStopVentThreshold",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 2140,
+        "y": 1580,
+        "wires": []
+    },
+    {
+        "id": "163357482ec17dba",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "dewpointStopVentThreshold",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1910,
+        "y": 1580,
+        "wires": [
+            [
+                "7ce6ca6f49ec5569"
             ]
         ]
     }
