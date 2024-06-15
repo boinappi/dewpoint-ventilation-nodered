@@ -110,6 +110,28 @@
         "color": "#DDAA99"
     },
     {
+        "id": "4dccb179cf2f8095",
+        "type": "subflow",
+        "name": "Sensor Mail Warnung",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 50,
+                "y": 30,
+                "wires": [
+                    {
+                        "id": "4592601e4703fefb"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
         "id": "a2c6fe6fccf222a3",
         "type": "ui_group",
         "name": "Taupunkttemperaturen",
@@ -632,6 +654,187 @@
         "wires": []
     },
     {
+        "id": "e5a66a2e2b6907d5",
+        "type": "e-mail",
+        "z": "4dccb179cf2f8095",
+        "server": "",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "Warnung Taupunktlüftung",
+        "x": 1330,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "79f315fa7d23ac74",
+        "type": "switch",
+        "z": "4dccb179cf2f8095",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Sensor innen",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Sensor aussen",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 510,
+        "y": 200,
+        "wires": [
+            [
+                "f3cedabe8083d2e3"
+            ],
+            [
+                "28bf7d00359db413"
+            ]
+        ]
+    },
+    {
+        "id": "1abeab43ed523d25",
+        "type": "trigger",
+        "z": "4dccb179cf2f8095",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "1",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 930,
+        "y": 160,
+        "wires": [
+            [
+                "e5a66a2e2b6907d5"
+            ]
+        ]
+    },
+    {
+        "id": "4592601e4703fefb",
+        "type": "change",
+        "z": "4dccb179cf2f8095",
+        "name": "Mailtext",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "Der Sensor liefert seit geraumer Zeit keine Werte.",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 200,
+        "wires": [
+            [
+                "79f315fa7d23ac74"
+            ]
+        ]
+    },
+    {
+        "id": "c23706871dcaa7a8",
+        "type": "trigger",
+        "z": "4dccb179cf2f8095",
+        "name": "",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "1",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "hr",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 930,
+        "y": 240,
+        "wires": [
+            [
+                "e5a66a2e2b6907d5"
+            ]
+        ]
+    },
+    {
+        "id": "28bf7d00359db413",
+        "type": "change",
+        "z": "4dccb179cf2f8095",
+        "name": "Sensor aussen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Warnung Taupunktlüftung: Sensor aussen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 240,
+        "wires": [
+            [
+                "c23706871dcaa7a8"
+            ]
+        ]
+    },
+    {
+        "id": "f3cedabe8083d2e3",
+        "type": "change",
+        "z": "4dccb179cf2f8095",
+        "name": "Sensor innen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Warnung Taupunktlüftung: Sensor innen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 160,
+        "wires": [
+            [
+                "1abeab43ed523d25"
+            ]
+        ]
+    },
+    {
         "id": "7e722569d7e3a4d3",
         "type": "function",
         "z": "44b19fd327dc4245",
@@ -779,7 +982,8 @@
         "y": 400,
         "wires": [
             [
-                "809f47cfc0f2a4a9"
+                "809f47cfc0f2a4a9",
+                "4ef2fc67e2575c09"
             ]
         ]
     },
@@ -820,7 +1024,8 @@
         "y": 360,
         "wires": [
             [
-                "c81185caaa45d70f"
+                "c81185caaa45d70f",
+                "33d076fe866d0e04"
             ]
         ]
     },
@@ -3203,6 +3408,69 @@
         "wires": [
             [
                 "7ce6ca6f49ec5569"
+            ]
+        ]
+    },
+    {
+        "id": "079bbfc62521d900",
+        "type": "subflow:4dccb179cf2f8095",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "x": 1820,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "33d076fe866d0e04",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Sensor aussen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1560,
+        "y": 200,
+        "wires": [
+            [
+                "079bbfc62521d900"
+            ]
+        ]
+    },
+    {
+        "id": "4ef2fc67e2575c09",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Sensor innen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1560,
+        "y": 260,
+        "wires": [
+            [
+                "079bbfc62521d900"
             ]
         ]
     }
