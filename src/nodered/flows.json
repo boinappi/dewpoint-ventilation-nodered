@@ -597,7 +597,7 @@
         "type": "function",
         "z": "4efe4ef31efc59e1",
         "name": "function 2",
-        "func": "var shellyIds = [\"shelly1\", \"shelly2\"];\nvar outMsgs = [];\nvar msgTemplate = msg;\nshellyIds.forEach((e)=>{\n   let newMsg = {};\n   newMsg.topic = \"shellies/\"+e+\"/relay/0/command\";\n   newMsg.payload = msg.payload;\n   newMsg.retain = msg.retain;\n   newMsg.qos = msg.qos;\n   outMsgs.push(newMsg);\n});\n\n    \nreturn [outMsgs];",
+        "func": "var shellyIds = [\"shellyplus1pm-zuluft\", \"shellyplus1pm-abluft\"];\nvar outMsgs = [];\nvar msgTemplate = msg;\nshellyIds.forEach((e)=>{\n   let newMsg = {};\n   \n   newMsg.topic = e+\"/command/switch:0\";\n   newMsg.payload = msg.payload;\n   newMsg.retain = msg.retain;\n   newMsg.qos = msg.qos;\n   outMsgs.push(newMsg);\n});\n\n    \nreturn [outMsgs];",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -608,9 +608,28 @@
         "y": 60,
         "wires": [
             [
-                "cdd4689aef6f8f1e"
+                "cdd4689aef6f8f1e",
+                "3fd5fa046df98b0b"
             ]
         ]
+    },
+    {
+        "id": "3fd5fa046df98b0b",
+        "type": "mqtt out",
+        "z": "4efe4ef31efc59e1",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "88a7db86f6a72312",
+        "x": 850,
+        "y": 100,
+        "wires": []
     },
     {
         "id": "7e722569d7e3a4d3",
@@ -759,7 +778,9 @@
         "x": 1290,
         "y": 400,
         "wires": [
-            []
+            [
+                "809f47cfc0f2a4a9"
+            ]
         ]
     },
     {
@@ -798,7 +819,9 @@
         "x": 1300,
         "y": 360,
         "wires": [
-            []
+            [
+                "c81185caaa45d70f"
+            ]
         ]
     },
     {
@@ -837,7 +860,8 @@
         "wires": [
             [
                 "d42bd60866bac4eb",
-                "779053786aec1d04"
+                "779053786aec1d04",
+                "2086c2ea6f81d170"
             ]
         ]
     },
@@ -866,7 +890,7 @@
         "diff": false,
         "className": "",
         "x": 930,
-        "y": 580,
+        "y": 520,
         "wires": []
     },
     {
@@ -1540,7 +1564,7 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "shellies/shellyplug1/relay/0/command",
+        "topic": "shellyplus1pm-abluft/command/switch:0",
         "payload": "on",
         "payloadType": "str",
         "x": 170,
@@ -1570,14 +1594,15 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "shellies/shellyplug1/relay/0/command",
+        "topic": "shellyplus1pm-abluft/command/switch:0",
         "payload": "off",
         "payloadType": "str",
         "x": 170,
         "y": 2240,
         "wires": [
             [
-                "1a02945147fb8e69"
+                "1a02945147fb8e69",
+                "fb87e2390dc1cf46"
             ]
         ]
     },
@@ -1586,7 +1611,7 @@
         "type": "debug",
         "z": "44b19fd327dc4245",
         "name": "debug 4",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1641,7 +1666,7 @@
         "type": "debug",
         "z": "44b19fd327dc4245",
         "name": "debug 5",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
@@ -1661,7 +1686,8 @@
         "y": 1060,
         "wires": [
             [
-                "deaf591fbdc0259b"
+                "deaf591fbdc0259b",
+                "68deab2ff510b847"
             ]
         ]
     },
@@ -1674,7 +1700,7 @@
         "op2": "false",
         "op1type": "bool",
         "op2type": "bool",
-        "duration": "15",
+        "duration": "30",
         "extend": false,
         "overrideDelay": false,
         "units": "min",
@@ -1699,7 +1725,7 @@
         "timeout": "5",
         "timeoutUnits": "seconds",
         "rate": "1",
-        "nbRateUnits": "30",
+        "nbRateUnits": "45",
         "rateUnits": "minute",
         "randomFirst": "1",
         "randomLast": "5",
@@ -1794,7 +1820,8 @@
         "wires": [
             [
                 "d13342fbb32b0b99",
-                "958d1addddbff024"
+                "958d1addddbff024",
+                "f091725d82577aa9"
             ]
         ]
     },
@@ -2240,7 +2267,8 @@
         "y": 1360,
         "wires": [
             [
-                "d13342fbb32b0b99"
+                "d13342fbb32b0b99",
+                "afa5496c588b6250"
             ]
         ]
     },
@@ -2619,6 +2647,400 @@
         "wires": [
             [
                 "69760a1fa797ba89"
+            ]
+        ]
+    },
+    {
+        "id": "1ff82472d597b556",
+        "type": "inject",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 190,
+        "y": 2340,
+        "wires": [
+            [
+                "e6a00ddc23c853ae"
+            ]
+        ]
+    },
+    {
+        "id": "5331520dcb57890b",
+        "type": "inject",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 190,
+        "y": 2380,
+        "wires": [
+            [
+                "e6a00ddc23c853ae"
+            ]
+        ]
+    },
+    {
+        "id": "e6a00ddc23c853ae",
+        "type": "subflow:4efe4ef31efc59e1",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "x": 370,
+        "y": 2360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0ac1898496e76dc7",
+        "type": "ui_chart",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "ac09835a791728a6",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Taupunktübersicht",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "dd HH:mm",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1870,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c81185caaa45d70f",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "aussen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "outdoor.dewpoint",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "aussen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1620,
+        "y": 540,
+        "wires": [
+            [
+                "0ac1898496e76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "809f47cfc0f2a4a9",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "innen",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "indoor.dewpoint",
+                "tot": "flow"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "innen",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1610,
+        "y": 580,
+        "wires": [
+            [
+                "0ac1898496e76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "2086c2ea6f81d170",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "Differenz",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.dewpoint_diff",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Differenz",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1620,
+        "y": 620,
+        "wires": [
+            [
+                "0ac1898496e76dc7"
+            ]
+        ]
+    },
+    {
+        "id": "7992a7dc6b6867f2",
+        "type": "ui_chart",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "group": "ac09835a791728a6",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "Lüfterbetrieb",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "604800",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1890,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68deab2ff510b847",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "off",
+                "fromt": "str",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "on",
+                "fromt": "str",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Lüfterbetrieb",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1680,
+        "y": 1020,
+        "wires": [
+            [
+                "7992a7dc6b6867f2"
+            ]
+        ]
+    },
+    {
+        "id": "f091725d82577aa9",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "manuelles Lüften nach Zeit",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1680,
+        "y": 1060,
+        "wires": [
+            [
+                "7992a7dc6b6867f2"
+            ]
+        ]
+    },
+    {
+        "id": "afa5496c588b6250",
+        "type": "change",
+        "z": "44b19fd327dc4245",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Lüftung unterdrückt",
+                "tot": "str"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1680,
+        "y": 1100,
+        "wires": [
+            [
+                "7992a7dc6b6867f2"
             ]
         ]
     }
